@@ -3,6 +3,12 @@ Project name: White-Wolf-SGS9-TW
 
 25/03/2019
 
+  * version 10.1
+  * Revert "sd: Fix rw_max for devices that report an optimal xfer size" (Sayali Lokhande) [53a80d010e33]
+  * Revert "scsi: sd: Optimal I/O size should be a multiple of physical block size" (FAROVITUS) [a89742af4353]
+
+25/03/2019
+
   * version 10
   * arm64:exynos9810: build only eur_open_26.dtb (Slawek) [b95c66e14522]
   * arm64: mmu: remove rodata as it's not used by SAMSUNG (FAROVITUS) [c42642d6f54b]
