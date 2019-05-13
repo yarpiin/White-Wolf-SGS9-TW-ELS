@@ -37,8 +37,10 @@ export KBUILD_BUILD_USER=yarpiin
 export KBUILD_BUILD_HOST=kernel
 
 # Paths
-STARIMG_DIR="/home/yarpiin/Android/Kernel/SGS9/KernelFlasher/boot/G960"
-STAR2IMG_DIR="/home/yarpiin/Android/Kernel/SGS9/KernelFlasher/boot/G965"
+STARREPACK_DIR="/home/yarpiin/Android/Kernel/SGS9/Repack/G960/split_img"
+STAR2REPACK_DIR="/home/yarpiin/Android/Kernel/SGS9/Repack/G965/split_img"
+STARIMG_DIR="/home/yarpiin/Android/Kernel/SGS9/Repack/G960"
+STAR2IMG_DIR="/home/yarpiin/Android/Kernel/SGS9/Repack/G965"
 ZIP_MOVE="/home/yarpiin/Android/Kernel/SGS9/Zip"
 ZIMAGE_DIR="$KERNEL_DIR/arch/arm64/boot"
 
@@ -47,12 +49,9 @@ function clean_all {
 		if [ -f "$MODULES_DIR/*.ko" ]; then
 			rm `echo $MODULES_DIR"/*.ko"`
 		fi
-		cd $STARIMG_DIR
-		rm -rf zImage
-		rm -rf img.dtb
-		cd $STAR2IMG_DIR
-		rm -rf zImage
-		rm -rf img.dtb
+		cd $REPACK_DIR
+		rm -rf $KERNEL
+		rm -rf $DTBIMAGE
 		cd $KERNEL_DIR
 		echo
 		make clean && make mrproper
@@ -62,32 +61,46 @@ function make_star_kernel {
 		echo
 		make $STARDEFCONFIG
 		make $THREAD
-		cp -vr $ZIMAGE_DIR/$KERNEL $STARIMG_DIR/zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STARIMG_DIR/img.dtb
+		cp -vr $ZIMAGE_DIR/$KERNEL $STARREPACK_DIR/G960.img-zImage
+        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STARREPACK_DIR/G960.img-dtb
 }
 
 function make_star_permissive_kernel {
 		echo
 		make $STARPERM_DEFCONFIG
 		make $THREAD
-		cp -vr $ZIMAGE_DIR/$KERNEL $STARIMG_DIR/zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STARIMG_DIR/img.dtb
+		cp -vr $ZIMAGE_DIR/$KERNEL $STARREPACK_DIR/G960.img-zImage
+        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STARREPACK_DIR/G960.img-dtb
+}
+
+function repack_star {
+		/bin/bash /home/yarpiin/Android/Kernel/SGS9/Repack/G960/repackimg.sh
+		cd $STARIMG_DIR
+		cp -vr image-new.img $KERNELFLASHER_DIR/G960.img
+		cd $KERNEL_DIR
 }
 
 function make_star2_kernel {
 		echo
 		make $STAR2DEFCONFIG
 		make $THREAD
-		cp -vr $ZIMAGE_DIR/$KERNEL $STAR2IMG_DIR/zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STAR2IMG_DIR/img.dtb
+		cp -vr $ZIMAGE_DIR/$KERNEL $STAR2REPACK_DIR/G965.img-zImage
+        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STAR2REPACK_DIR/G965.img-dtb
 }
 
 function make_star2_permissive_kernel {
 		echo
 		make $STAR2PERM_DEFCONFIG
 		make $THREAD
-		cp -vr $ZIMAGE_DIR/$KERNEL $STAR2IMG_DIR/zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STAR2IMG_DIR/img.dtb
+		cp -vr $ZIMAGE_DIR/$KERNEL $STAR2REPACK_DIR/G965.img-zImage
+        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STAR2REPACK_DIR/G965.img-dtb
+}
+
+function repack_star2 {
+		/bin/bash /home/yarpiin/Android/Kernel/SGS9/Repack/G965/repackimg.sh
+		cd $STAR2IMG_DIR
+		cp -vr image-new.img $KERNELFLASHER_DIR/G965.img
+		cd $KERNEL_DIR
 }
 
 function make_zip {
@@ -143,31 +156,12 @@ done
 
 echo
 
-while read -p "Do you want to build G960 permissive kernel (y/n)? " dchoice
-do
-case "$dchoice" in
-	y|Y)
-		make_star_permissive_kernel
-		break
-		;;
-	n|N )
-		break
-		;;
-	* )
-		echo
-		echo "Invalid try again!"
-		echo
-		;;
-esac
-done
-
-echo
-
 while read -p "Do you want to build G965 permissive kernel (y/n)? " dchoice
 do
 case "$dchoice" in
 	y|Y)
 		make_star2_permissive_kernel
+        repack_star2
 		break
 		;;
 	n|N )
@@ -183,7 +177,28 @@ done
 
 echo
 
-while read -p "Zip permissive kernel (y/n)? " dchoice
+while read -p "Do you want to build G960 permissive kernel (y/n)? " dchoice
+do
+case "$dchoice" in
+	y|Y)
+		make_star_permissive_kernel
+        repack_star
+		break
+		;;
+	n|N )
+		break
+		;;
+	* )
+		echo
+		echo "Invalid try again!"
+		echo
+		;;
+esac
+done
+
+echo
+
+while read -p "Do you want to zip permissive kernel(y/n)? " dchoice
 do
 case "$dchoice" in
 	y|Y)
@@ -203,11 +218,13 @@ done
 
 echo
 
-while read -p "Do you want to build G960 kernel (y/n)? " dchoice
+while read -p "Do you want to clean stuffs (y/n)? " cchoice
 do
-case "$dchoice" in
-	y|Y)
-		make_star_kernel
+case "$cchoice" in
+	y|Y )
+		clean_all
+		echo
+		echo "All Cleaned now."
 		break
 		;;
 	n|N )
@@ -228,6 +245,28 @@ do
 case "$dchoice" in
 	y|Y)
 		make_star2_kernel
+        repack_star2
+		break
+		;;
+	n|N )
+		break
+		;;
+	* )
+		echo
+		echo "Invalid try again!"
+		echo
+		;;
+esac
+done
+
+echo
+
+while read -p "Do you want to build G960 kernel (y/n)? " dchoice
+do
+case "$dchoice" in
+	y|Y)
+		make_star_kernel
+        repack_star
 		break
 		;;
 	n|N )
