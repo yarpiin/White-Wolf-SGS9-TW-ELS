@@ -1,6 +1,20 @@
 
 Project name: White-Wolf-SGS9-TW
 
+28/05/2019
+
+  * version 20
+  * ramdisk: add init.d support
+  * f2fs: link f2fs quota ops for sysfile (Jaegeuk Kim) [0c57b2666e90]
+  * ext4: fix build warning (Jaegeuk Kim) [fef58f3aecbc]
+  * Revert "Revert "crypto: arm/aes-neonbs - don't access already-freed walk.iv"" (Eric Biggers) [338e01bb65ec]
+  * Revert "Revert "crypto: salsa20 - don't access already-freed walk.iv"" (Eric Biggers) [3d36df88d898]
+  * Revert "Revert "crypto: gcm - Fix error return code in crypto_gcm_create_common()"" (Wei Yongjun) [56d5b5170350]
+  * Revert "Revert "crypto: x86/crct10dif-pcl - fix use via crypto_shash_digest()"" (Eric Biggers) [3a00f796433f]
+  * Revert "Revert "crypto: crct10dif-generic - fix use via crypto_shash_digest()"" (Eric Biggers) [04550d4fa863]
+  * Revert "Revert "crypto: vmx - fix copy-paste error in CTR mode"" (Daniel Axtens) [0e5c1f9dd002]
+  * Revert "Revert "crypto: chacha20poly1305 - set cra_name correctly"" (Eric Biggers) [be513f64de7c]
+
 26/05/2019
 
   * version 19
