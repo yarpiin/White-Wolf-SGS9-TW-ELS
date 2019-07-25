@@ -37,8 +37,10 @@ export KBUILD_BUILD_USER=yarpiin
 export KBUILD_BUILD_HOST=kernel
 
 # Paths
-STARREPACK_DIR="/home/yarpiin/Android/Kernel/SGS9/KernelFlasher/boot/G960"
-STAR2REPACK_DIR="/home/yarpiin/Android/Kernel/SGS9/KernelFlasher/boot/G965"
+STARREPACK_DIR="/home/yarpiin/Android/Kernel/SGS9/Repack/G960/split_img"
+STAR2REPACK_DIR="/home/yarpiin/Android/Kernel/SGS9/Repack/G965/split_img"
+STARIMG_DIR="/home/yarpiin/Android/Kernel/SGS9/Repack/G960"
+STAR2IMG_DIR="/home/yarpiin/Android/Kernel/SGS9/Repack/G965"
 ZIP_MOVE="/home/yarpiin/Android/Kernel/SGS9/Zip"
 ZIMAGE_DIR="$KERNEL_DIR/arch/arm64/boot"
 
@@ -59,32 +61,46 @@ function make_star_kernel {
 		echo
 		make $STARDEFCONFIG
 		make $THREAD
-		cp -vr $ZIMAGE_DIR/$KERNEL $STARREPACK_DIR/zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STARREPACK_DIR/img.dtb
+		cp -vr $ZIMAGE_DIR/$KERNEL $STARREPACK_DIR/G960.img-zImage
+        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STARREPACK_DIR/G960.img-dtb
 }
 
 function make_star_permissive_kernel {
 		echo
 		make $STARPERM_DEFCONFIG
 		make $THREAD
-		cp -vr $ZIMAGE_DIR/$KERNEL $STARREPACK_DIR/zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STARREPACK_DIR/img.dtb
+		cp -vr $ZIMAGE_DIR/$KERNEL $STARREPACK_DIR/G960.img-zImage
+        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STARREPACK_DIR/G960.img-dtb
+}
+
+function repack_star {
+		/bin/bash /home/yarpiin/Android/Kernel/SGS9/Repack/G960/repackimg.sh
+		cd $STARIMG_DIR
+		cp -vr image-new.img $KERNELFLASHER_DIR/G960.img
+		cd $KERNEL_DIR
 }
 
 function make_star2_kernel {
 		echo
 		make $STAR2DEFCONFIG
 		make $THREAD
-		cp -vr $ZIMAGE_DIR/$KERNEL $STAR2REPACK_DIR/zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STAR2REPACK_DIR/img.dtb
+		cp -vr $ZIMAGE_DIR/$KERNEL $STAR2REPACK_DIR/G965.img-zImage
+        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STAR2REPACK_DIR/G965.img-dtb
 }
 
 function make_star2_permissive_kernel {
 		echo
 		make $STAR2PERM_DEFCONFIG
 		make $THREAD
-		cp -vr $ZIMAGE_DIR/$KERNEL $STAR2REPACK_DIR/zImage
-        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STAR2REPACK_DIR/img.dtb
+		cp -vr $ZIMAGE_DIR/$KERNEL $STAR2REPACK_DIR/G965.img-zImage
+        cp -vr $ZIMAGE_DIR/$DTBIMAGE $STAR2REPACK_DIR/G965.img-dtb
+}
+
+function repack_star2 {
+		/bin/bash /home/yarpiin/Android/Kernel/SGS9/Repack/G965/repackimg.sh
+		cd $STAR2IMG_DIR
+		cp -vr image-new.img $KERNELFLASHER_DIR/G965.img
+		cd $KERNEL_DIR
 }
 
 function make_zip {
@@ -145,6 +161,7 @@ do
 case "$dchoice" in
 	y|Y)
 		make_star2_permissive_kernel
+        repack_star2
 		break
 		;;
 	n|N )
@@ -165,6 +182,7 @@ do
 case "$dchoice" in
 	y|Y)
 		make_star_permissive_kernel
+        repack_star
 		break
 		;;
 	n|N )
@@ -227,6 +245,7 @@ do
 case "$dchoice" in
 	y|Y)
 		make_star2_kernel
+        repack_star2
 		break
 		;;
 	n|N )
@@ -247,6 +266,7 @@ do
 case "$dchoice" in
 	y|Y)
 		make_star_kernel
+        repack_star
 		break
 		;;
 	n|N )
