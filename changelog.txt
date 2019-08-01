@@ -1,6 +1,16 @@
 
 Project name: White-Wolf-SGS9-TW
 
+01/08/2019
+
+  * version 24
+  * f2fs: use EINVAL for superblock with invalid magic (Icenowy Zheng) [768fe98d6a60]
+  * f2fs: fix to read source block before invalidating it (Jaegeuk Kim) [35ee242de39a]
+  * f2fs: remove redundant check from f2fs_setflags_common() (Eric Biggers) [26aedce08a8c]
+  * f2fs: use generic checking and prep function for FS_IOC_SETFLAGS (Eric Biggers) [3b461a7f9b25]
+  * vfs: use READ_ONCE() to access ->i_link (Eric Biggers) [15eaa3faa54a]
+  * fs, fscrypt: clear DCACHE_ENCRYPTED_NAME when unaliasing directory (Eric Biggers) [7ca9fdffeb42]
+
 28/07/2019
 
   * version 23
