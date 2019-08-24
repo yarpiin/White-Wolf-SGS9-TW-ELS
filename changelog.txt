@@ -1,6 +1,15 @@
 
 Project name: White-Wolf-SGS9-TW
 
+24/08/2019
+
+  * version 28
+  * yarpiin_defconfig: regenerate (yarpiin) [43526b2f201e]
+  * defconfig: disable CONFIG_UH (FAROVITUS) [5c7f6f2fd332]
+  * import G96xFXXU6CSGD OSRC (FAROVITUS) [8fc1836a2d80]
+  * Revert "Revert "exynos9810-rmem.dtsi: correct path to autoconf.h"" (FAROVITUS) [5b0f713d1e59]
+  * UPSTREAM: ANDROID: binder: change down_write to down_read (Minchan Kim) [7621bcc62e4a]
+
 12/08/2019
 
   * version 27
