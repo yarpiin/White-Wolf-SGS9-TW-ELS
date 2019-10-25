@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 4.9.173 Kernel Configuration
+# Linux/arm64 4.9.197 Kernel Configuration
 #
 CONFIG_ARM64=y
 CONFIG_64BIT=y
@@ -1919,6 +1919,7 @@ CONFIG_WLAN_VENDOR_BROADCOM=y
 CONFIG_BROADCOM_WIFI=y
 # CONFIG_BCM4330 is not set
 # CONFIG_BCM4343 is not set
+# CONFIG_BCM43436 is not set
 # CONFIG_BCM4334 is not set
 # CONFIG_BCM4335 is not set
 # CONFIG_BCM4339 is not set
@@ -1947,6 +1948,8 @@ CONFIG_BCMDHD_PREALLOC_MEMDUMP=y
 # CONFIG_WLAN_HERO2 is not set
 CONFIG_BCMDHD_OOB_HOST_WAKE=y
 # CONFIG_SPLIT_ARGOS_SET is not set
+# CONFIG_WLAN_GRACE is not set
+# CONFIG_WLAN_GREAT is not set
 # CONFIG_BCM_DETECT_CONSECUTIVE_HANG is not set
 # CONFIG_WLAN_TSQ_MULTIPLIER is not set
 # CONFIG_DHD_DRIVEN_RANDOM_MAC_SCAN is not set
