@@ -1,6 +1,15 @@
 
 Project name: White-Wolf-SGS9-TW
 
+18/11/2019
+
+  * version 39
+  * usb:gadget: derp
+  * import G96xFXXU7CSK1 OSRC (FAROVITUS) [118c3997c7c7]
+  * import G96xFXXU7CSJ1 OSRC (FAROVITUS) [404e8a542537]
+  * defconfig: regenerate (FAROVITUS) [eacd5dc621c2]
+  * Revert "usb: gadget: configfs: fix concurrent issue between composite APIs" (FAROVITUS) [043512653686]
+
 16/11/2019
 
   * version 38
